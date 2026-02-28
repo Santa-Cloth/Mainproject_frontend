@@ -1,7 +1,7 @@
 const BASEURL = process.env.NEXT_PUBLIC_BACK_API_URL;
 
 /**
- * 장바구니 리스트 저장 API
+ * 북마크 리스트 저장 API
  */
 export const saveBookmarkAPI = async (token: string, productId: string, styleName?: string) => {
     // console.log("saveBookmarkAPI productId:", productId);
@@ -16,15 +16,14 @@ export const saveBookmarkAPI = async (token: string, productId: string, styleNam
             },
             body: JSON.stringify({ naverProductId: productId, styleName: styleName || '' }),
         });
-        return response.ok;
     } catch (error) {
-        console.error("saveCartAPI error:", error);
+        console.error("saveBookmarkAPI error:", error);
         return false;
     }
 };
 
 /**
- * 장바구니 리스트 삭제 API (단일/다중 통합)
+ * 북마크 리스트 삭제 API (단일/다중 통합)
  * @param productIds 삭제할 ID들의 배열 (Body에 직접 배열로 전송)
  */
 export const deleteBookmarkAPI = async (token: string, productIds: string[]) => {
@@ -39,20 +38,19 @@ export const deleteBookmarkAPI = async (token: string, productIds: string[]) => 
             },
             body: JSON.stringify(productIds),
         });
-        return response.ok;
     } catch (error) {
-        console.error("deleteCartAPI error:", error);
+        console.error("deleteBookmarkAPI error:", error);
         return false;
     }
 };
 
 /**
- * 장바구니 리스트 불러오기 API
+ * 북마크 리스트 불러오기 API
  */
 import { BookmarkData } from "@/types/ProductType";
 
 /**
- * 장바구니 리스트 불러오기 API
+ * 북마크 리스트 불러오기 API
  */
 export const getBookmarkAPI = async (token: string): Promise<BookmarkData[] | null> => {
     const reqUrl = `${BASEURL}/api/save-products`;
@@ -76,7 +74,7 @@ export const getBookmarkAPI = async (token: string): Promise<BookmarkData[] | nu
 
         return [];
     } catch (error) {
-        console.error("getCartAPI error:", error);
+        console.error("getBookmarkAPI error:", error);
         return [];
     }
 };

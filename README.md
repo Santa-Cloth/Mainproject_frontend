@@ -1,6 +1,6 @@
 # 🎩 Wizard of Ounce: AI Fashion Archive & Analytics
 
-**Next.js 16 (App Router)**와 **Tailwind CSS 4**를 기반으로 구축된 고성능 AI 패션 트렌드 분석 및 스타일 큐레이션 플랫폼입니다. 고도화된 머신러닝 인퍼런스를 통해 사용자 이미지를 분석하고, 글로벌 패션 트렌드 데이터와 실시간으로 매칭하여 최적화된 인사이트를 제공합니다.
+**Next.js 16 (App Router)**와 **Tailwind CSS 4**를 기반으로 구축된 패션 스타일 분석 및 데이터 대시보드 프론트엔드입니다. 백엔드 API(Spring 등)와 연동하여 사용자가 업로드한 이미지를 512/768차원 벡터로 분석한 스타일 분류 결과와, 쇼핑 트렌드 지표, 지점별 매출 랭킹 데이터를 시각화하여 제공합니다.
 
 ---
 
@@ -8,48 +8,42 @@
 
 - **Frontend Framework**: `Next.js 16+` (App Router, Turbopack)
 - **Programming Language**: `TypeScript` (Strictly typed interfaces)
-- **Styling Engine**: `Tailwind CSS 4` (Next-gen utility-first styling)
-- **State Orchestration**: `Jotai` (Atomic state management with Persistence)
+- **Styling Engine**: `Tailwind CSS 4`
+- **State Orchestration**: `Jotai`
 - **Data Visualization**: 
-  - **Plotly.js**: High-dimensional `Style Vector Spaces` projection (UMAP/t-SNE)
-  - **Recharts**: Style distribution analytics & performance metrics
-- **Visual Continuity**: `Framer Motion` (Advanced layout transitions & micro-animations)
-- **Design System**: Custom Glassmorphism UI with Dynamic Theming (Sunlight-Solar / Dark-Celestial)
+  - **Plotly.js**: `Style Vector Spaces` 3D projection
+  - **Recharts**: Style distribution analytics
+- **Visual Continuity**: `Framer Motion` (Layout transitions & animations)
+- **Design System**: Glassmorphism UI with Light/Dark Theme
 
 ---
 
 ## 🚀 Key Engineering Features
 
-### 1. Dual-Core AI Analysis Studio
-사용자의 니즈에 따라 두 가지 방식의 지능형 분석 엔진을 제공합니다.
-- **Image Input Engine (Upload)**: 사용자의 실제 이미지를 직접 분석하여 스타일 가공 및 추천 (최대 10MB 고정밀 업로드 지원)
-- **Catalog Selection Engine (Curation)**: 마스터 데이터베이스 내 검증된 카테고리별 베스트 상품을 선택하여 스타일 전이 및 매칭
+### 1. AI Analysis Studio
+두 가지 방식의 분석 입력을 제공합니다.
+- **Image Input Engine (Upload)**: 사용자가 업로드한 이미지를 분석하여 유사 스타일 상품 추천
+- **Catalog Selection Engine (Curation)**: 데이터베이스 내 기존 상품을 선택하여 유사 스타일 조회
 - **Multi-Model Support**: 
-  - **GCN (Gated Convolutional Network)**: 512차원 기반의 빠르고 정확한 계층적 스타일 분석
-  - **CLIP (Contrastive Language-Image Pre-training)**: 768차원 고해상성 인코딩을 통한 텍스트-이미지 교차 정밀 분석
+  - **512 Dimension Mode**: 512차원 벡터 기반의 스타일 분석 (`imageAnalyze` / `getRecommendList`)
+  - **768 Dimension Mode**: 768차원 모델 인코딩을 통한 스타일 분석 (`image768Analyze` / `getRecommend768List`)
 
-### 2. Interactive Analytics Dashboard (Real-time Pipeline)
-지점별 매출 통계와 상품 트렌드를 실시간으로 비교 분석할 수 있는 고성능 대시보드입니다.
-- **Sales Comparison Pipeline**: 최대 2개의 지점을 선택하여 전체 지점 평균과 실시간으로 매출 랭킹 및 수량을 비교 분석하는 인터랙티브 파이프라인.
-- **Unified 3D Visualization**: `ScatterPlot`과 `StyleDistributionCard` 전반에 걸친 10색 고대비/비비드 컬러 팔레트 공유 체계를 구축하여 동일 스타일 = 동일 데이터 직관성 보장. 점들의 뭉침을 방지하기 위한 미세 다크 외곽선 최적화 및 `uirevision` 옵션을 통한 플롯(Plot) 카메라 앵글 일관성 지원.
-- **Zero-Distraction Viewing Mode**: `Jotai`를 이용해 화면을 100% 활용하는 풀스크린 분석 뷰 진입 시, 플로팅 내비게이션 바 등 사이드 UI를 실시간으로 치우는(Auto-pan) 초몰입형 시각화 환경 제공.
-- **Dynamic Grid Architecture**: 화면 크기에 따라 8:4(광폭) 또는 7:5(표준) 비율로 자동 조정되는 지능형 그리드 시스템을 통해 시각적 균형 유지.
-- **Sequential Brand Gradient**: [진한 보라 - 보라 - 연한 보라]로 이어지는 브랜드 시퀀스 컬러를 내비게이션과 카드에 적용하여 직관적인 사용자 흐름(Flow) 구축.
+### 2. Analytics Dashboard
+매출 랭킹, 쇼핑 트렌드, 그리고 분류된 스타일 분포를 조회할 수 있는 대시보드 구조입니다.
+- **Sales Comparison Pipeline**: 최대 2개의 지점을 추가 선택하여 전체 지점 평균과 매출 순위를 나란히 비교할 수 있는 멀티-컬럼 레이아웃(`BestSellersCard`).
+- **Latent Space 3D Projections**: `plotly.js`를 이용한 3차원 데이터 시각화(`ScatterPlot.tsx`). 패션 아이템들이 어떤 군집(Cluster)을 형성하는지 렌더링하며, `uirevision` 속성으로 카메라 워킹 동기화를 유지합니다.
+- **Trend & Radar Metrics**: `Recharts` 라이브러리를 통해 분석 이미지의 Top 3 스타일 스코어를 방사형(Radar) 차트로 시각화하며, 검색 트렌드 순위와 함께 표시.
+- **Brand Color Gradient**: [진한 보라 - 보라 - 연한 보라]로 이어지는 시퀀스 컬러를 내비게이션 바에 적용하여 테마 구축.
 
-### 3. Universal Style Harmonizer (Intelligent Translation)
-API 응답의 정규화된 스타일 약어와 실제 UI의 사용자 경험 간의 간극을 메우는 지능형 매핑 시스템입니다.
-- **Shortkey System**: `CAS`(Casual), `CNT`(Contemporary), `ETH`(Ethnic) 등 API 최적화 약어 지원
-- **Cross-Lingual Dictionary**: 영어-한글-약어 간 실시간 변환을 통해 대시보드 시각화와 북마크 데이터의 일관성 보장
+### 3. State Management & Persistence
+- **Session History & Backend Bookmark**: `Jotai`를 활용해 최근 분석 이력(History)을 `sessionStorage`에 임시 캐싱하여 페이지 이동 시 유지하고, 북마크(Bookmark)는 사용자 토큰을 통해 백엔드 API와 동기화.
+- **Floating Assistant**: 화면 우측 사이드에 고정되는 `FloatingHistory` 컴포넌트를 통해 이전 분석 카드로 이동하거나 뱃지(Badge) 형태의 북마크 개수를 파악할 수 있는 UI 표출.
 
-### 3. Asynchronous Lifecycle Management (Reliability)
-비동기 통신 중 발생할 수 있는 부작용(Side Effect)을 원천 차단하는 견고한 아키텍처를 구현했습니다.
-- **Task-ID Tracker**: 분석 로직에 고유 식별자(Execution ID)를 부여하여, 사용자의 **취소 버튼 클릭 시 이미 진행 중인 API 응답을 자동으로 폐기**하여 화면 전환 오류를 방지합니다.
-- **Timeout Watchdog**: GPU 서버 등의 인퍼런스 지연에 대비한 30초 데드라인 설정으로 브라우저 행(Hang) 현상을 예방합니다.
-
-### 4. Smart Storage Quota Defense (Persistence)
-브라우저의 엄격한 Storage Quota(5MB) 제한을 극복하기 위한 커스텀 저장소 정책을 적용했습니다.
-- **Safe Storage Wrapper**: `QuotaExceededError` 발생 시 즉시 최신 기록 1개만 남기고 이전 데이터를 자동 정제(Purging)하여 앱의 영속성을 보장합니다.
-- **Stale Closure Mitigation**: `useRef`를 활용한 비동기 클로저 캡처 방지 로직으로, 긴 연산 후에도 최신 분석 결과가 유실 없이 히스토리에 기록됩니다.
+### 4. Frontend Engineering 
+- **Dynamic Chart Import (next/dynamic)**: SSR 렌더링 환경에서 `window` 객체 부재로 발생하는 서드파티 시각화 라이브러리(`react-plotly.js`) 에러 방지를 위해 클라이언트 지연 로딩(dynamic loading) 적용. 
+- **Next.js Extended Fetch API**: 서드파티 라이브러리 없이 Next.js의 Native `fetch`를 활용한 API 연동(`src/app/api`). 요구사항에 맞춰 `{ revalidate: 3600 }` (ISR 캐싱) 및 `{ cache: 'no-store' }` (SSR) 옵션을 혼합 적용.
+- **Turbopack Build**: 로컬 개발 서버 구동 시 Next.js의 `--turbo` 번들러 옵션을 적용하여 파일 교체 속도(HMR) 단축.
+- **Route Groups**: `app/(main)`과 같은 Route Group 폴더 분할 방식을 채택하여 URL 경로(`/`)를 변경하지 않고 공통 레이아웃 분리.
 
 ---
 
@@ -88,4 +82,4 @@ src/
    ```
 
 ---
-*© 2026 Wizard of Ounce. Advanced Generative Fashion Analytics.*
+*© 2026 Wizard of Ounce.*
