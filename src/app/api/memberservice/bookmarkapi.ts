@@ -5,7 +5,7 @@ const BASEURL = process.env.NEXT_PUBLIC_BACK_API_URL;
  */
 export const saveBookmarkAPI = async (token: string, productId: string, styleName?: string) => {
     // console.log("saveBookmarkAPI productId:", productId);
-    console.log("saveBookmarkAPI styleName:", styleName);
+    // console.log("saveBookmarkAPI styleName:", styleName);
     const reqUrl = `${BASEURL}/api/save-products`;
     try {
         const response = await fetch(reqUrl, {
@@ -16,6 +16,7 @@ export const saveBookmarkAPI = async (token: string, productId: string, styleNam
             },
             body: JSON.stringify({ naverProductId: productId, styleName: styleName || '' }),
         });
+        return response.ok;
     } catch (error) {
         console.error("saveBookmarkAPI error:", error);
         return false;
@@ -38,6 +39,7 @@ export const deleteBookmarkAPI = async (token: string, productIds: string[]) => 
             },
             body: JSON.stringify(productIds),
         });
+        return response.ok;
     } catch (error) {
         console.error("deleteBookmarkAPI error:", error);
         return false;
