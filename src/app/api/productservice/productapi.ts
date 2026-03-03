@@ -60,7 +60,7 @@ export const getRecommendList = async (productId: string): Promise<SelectionReco
 
 
         const data: SelectionRecommendResult = await response.json();
-        console.log("data", data);
+        // console.log("data", data);
         // [매핑] 네이버 상품의 경우 naverProductId를 productId로 통일하여 프론트 규격 준수
         if (data.naverProducts) {
             data.naverProducts = data.naverProducts.map((p: any) => ({
