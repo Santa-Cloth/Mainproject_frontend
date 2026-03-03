@@ -53,11 +53,13 @@ export const getScatterPoints = async (): Promise<ScatterPoint[]> => {
 
 export const getScatter512Points = async (): Promise<ScatterPoint[]> => {
     try {
+        // console.log("Fetching 512 map data...");
         const response = await fetch(`${BASEURL}/api/products/map/512`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },
+            cache: 'no-store'
         });
 
         if (!response.ok) {
@@ -84,11 +86,13 @@ export const getScatter512Points = async (): Promise<ScatterPoint[]> => {
 
 export const getScatter768Points = async (): Promise<ScatterPoint[]> => {
     try {
+        // console.log("Fetching 768 map data...");
         const response = await fetch(`${BASEURL}/api/products/map/768`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },
+            cache: 'no-store'
         });
 
         if (!response.ok) {

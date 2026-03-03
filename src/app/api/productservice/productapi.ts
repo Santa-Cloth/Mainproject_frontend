@@ -217,6 +217,7 @@ export const getInternalStyleCount512 = async () => {
             headers: {
                 'Content-Type': 'application/json',
             },
+            cache: 'no-store'
         });
 
         if (!response.ok) {
@@ -240,6 +241,7 @@ export const getInternalStyleCount768 = async () => {
             headers: {
                 'Content-Type': 'application/json',
             },
+            cache: 'no-store'
         });
 
         if (!response.ok) {

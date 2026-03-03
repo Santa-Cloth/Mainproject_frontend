@@ -123,6 +123,7 @@ export default function Dashboard({
             className="flex-1"
           />
           <ScatterPlot
+            key={modelMode}
             title="스타일 클러스터"
             subtitle="잠재벡터 맵"
             description="제품 특징을 공간에 압축하여 시각화한 맵입니다."
