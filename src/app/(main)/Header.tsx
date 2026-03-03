@@ -177,8 +177,8 @@ export default function Header() {
   return (
     <nav className="absolute top-0 left-0 right-0 z-50 px-3 sm:px-6 lg:px-8 py-4 lg:py-6">
       <div className="max-w-7xl mx-auto">
-        {/* 단일 통합 헤더 바: w-full로 아래 카드들과 길이를 맞춤 */}
-        <div className="w-full flex items-center bg-white/80 dark:bg-neutral-900/80 backdrop-blur-xl p-1.5 rounded-full border-2 border-neutral-100 dark:border-white/10 shadow-xl transition-all">
+        {/* 단일 통합 헤더 바: w-full로 아래 카드들과 길이를 맞춤. (transform-gpu 추가로 크롬 줌 버그 렌더링 픽스) */}
+        <div className="w-full flex items-center bg-white/80 dark:bg-neutral-900/80 backdrop-blur-xl p-1.5 rounded-full border-2 border-neutral-100 dark:border-white/10 shadow-xl transform-gpu will-change-transform">
 
           {/* 1. 좌측: 브랜드 로고 (좌측 밀착) */}
           <Link href="/" className="flex flex-row gap-2 items-center pl-3 pr-1 md:pr-2 py-1 hover:opacity-70 transition-opacity shrink-0">

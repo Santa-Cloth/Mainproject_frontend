@@ -165,10 +165,6 @@ const UploadPanel = forwardRef<UploadPanelRef, UploadPanelProps>(({ onResultFoun
 
     const currentSearchId = ++searchIdRef.current;
 
-    if (preview) {
-      onAnalysisStart(preview, selectedFile.name);
-    }
-
     startTransition(async () => {
       try {
         // 2. 이미지 서버로 업로드 (Server Action 호출, 선택된 모델에 따라 API 분기)

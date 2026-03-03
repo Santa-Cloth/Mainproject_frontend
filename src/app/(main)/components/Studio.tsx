@@ -104,14 +104,23 @@ export default function Studio({ mode }: { mode: StudioMode }) {
 
       if (imgToSave) {
         setHistory((prev) => {
+          // [최적화] 히스토리 저장용 결과물 다이어트 (용량 초과 방지)
+          const sanitizedData = data ? {
+            ...data,
+            // 최근 분석 내용 복원 시 상위 24개 정도면 충분하므로 리스트 절삭
+            internalProducts: (data as any).internalProducts?.slice(0, 24) || [],
+            naverProducts: (data as any).naverProducts?.slice(0, 24) || [],
+          } : data;
+
           const newItem: HistoryItem = {
             id: Date.now().toString(),
             type: mode,
             sourceImage: imgToSave,
             productName: nameToSave,
             timestamp: Date.now(),
-            results: data,
+            results: sanitizedData as any,
           };
+          // 최신 3개만 유지
           return [newItem, ...prev].slice(0, 3);
         });
       }

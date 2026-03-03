@@ -21,16 +21,21 @@ const safeSessionStorage = typeof window !== 'undefined' ? {
         try {
             sessionStorage.setItem(key, value);
         } catch (e) {
-            console.warn("Storage quota exceeded. History won't be saved.");
-            // 용량 초과 시 오래된 데이터 강제 삭제 후 최신 데이터만 저장 시도
+            console.warn("Storage quota exceeded. Attempting recovery...");
             try {
+                // 1. 기존의 무거운 스토리지 공간을 선제적으로 비워버림 (확실하게 공간 확보)
+                sessionStorage.removeItem(key);
+
+                // 2. 가장 최신 항목 1개만 남기고 다시 포맷팅 시도
                 const parsed = JSON.parse(value);
-                if (Array.isArray(parsed) && parsed.length > 1) {
-                    // 가장 최신 항목 1개만 남기고 다시 저장 시도
+                if (Array.isArray(parsed) && parsed.length > 0) {
                     sessionStorage.setItem(key, JSON.stringify([parsed[0]]));
+                    console.log("Storage recovered by keeping only the latest item.");
                 }
             } catch (retryErr) {
-                console.error("Failed to recover storage quota:", retryErr);
+                // 3. 최신 항목 1개조차도 용량이 너무 크다면 진짜로 저장 포기 (에러 전파 방지)
+                console.error("Critical Storage Error: Item too large to save even after purge.", retryErr);
+                sessionStorage.removeItem(key); // 확실히 찌꺼기 제거
             }
         }
     },

@@ -168,6 +168,7 @@ const ProductCard = React.memo(({
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         priority={index < 4}
+                        unoptimized={true}
                         className={`group-hover:scale-105 transition-transform duration-700 object-contain p-2`}
                     />
                 ) : (
