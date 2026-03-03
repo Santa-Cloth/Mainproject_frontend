@@ -151,8 +151,8 @@ export default function Studio({ mode }: { mode: StudioMode }) {
     startTransition(async () => {
       try {
 
-        // 2. 이미지 모바일 통신을 고려하여 경량 프로필 이미지로 리사이징
-        const { dataUrl, blob } = await resizeImage(file, 300);
+        // 2. 이미지 모바일 통신을 고려하여 경량 프로필 이미지로 리사이징 (512px로 정밀도 상향)
+        const { dataUrl, blob } = await resizeImage(file, 512);
         analysisImageRef.current = dataUrl;
         analysisNameRef.current = file.name;
         setAnalysisImage(dataUrl);

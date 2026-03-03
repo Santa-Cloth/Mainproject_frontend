@@ -12,10 +12,10 @@ import { modelModeAtom } from '@/jotai/modelJotai';
 export const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
 /**
- * 서버 전송 및 히스토리 저장용 이미지 리사이징 (최대 256px)
+ * 서버 전송 및 히스토리 저장용 이미지 리사이징 (최대 512px)
  * 분석 정확도를 유지하면서도 전송 속도와 저장 용량을 최적화합니다.
  */
-export const resizeImage = (file: File, maxSize: number = 300): Promise<{ dataUrl: string; blob: Blob }> => {
+export const resizeImage = (file: File, maxSize: number = 512): Promise<{ dataUrl: string; blob: Blob }> => {
   return new Promise((resolve) => {
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -42,13 +42,13 @@ export const resizeImage = (file: File, maxSize: number = 300): Promise<{ dataUr
         const ctx = canvas.getContext('2d', { willReadFrequently: true });
         ctx?.drawImage(img, 0, 0, width, height);
 
-        // 1. 미리보기 및 히스토리용 DataURL (JPEG 0.6)
-        const dataUrl = canvas.toDataURL('image/jpeg', 0.6);
+        // 1. 미리보기 및 히스토리용 DataURL (품질 상향: 0.9)
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
 
-        // 2. 서버 전송용 Blob
+        // 2. 서버 전송용 Blob (품질 상향: 0.9)
         canvas.toBlob((blob) => {
           if (blob) resolve({ dataUrl, blob });
-        }, file.type || 'image/jpeg', 0.8);
+        }, file.type || 'image/jpeg', 0.9);
       };
       img.src = e.target?.result as string;
     };
@@ -123,8 +123,8 @@ const UploadPanel = forwardRef<UploadPanelRef, UploadPanelProps>(({ onResultFoun
     };
     reader.readAsDataURL(file);
 
-    // 2. 서버 전송 및 히스토리용 리사이즈 이미지 생성 (최대 300px)
-    const { dataUrl, blob } = await resizeImage(file, 300);
+    // 2. 서버 전송 및 히스토리용 리사이즈 이미지 생성 (최대 512px로 상향하여 분석 정확도 개선)
+    const { dataUrl, blob } = await resizeImage(file, 512);
 
     // 서버 전송 전 호환성 확보를 위해 Blob 데이터를 File 객체 형식으로 캐스팅
     const resizedFile = new File([blob], file.name, { type: file.type || 'image/jpeg' });

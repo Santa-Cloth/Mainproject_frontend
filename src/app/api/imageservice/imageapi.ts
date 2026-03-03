@@ -63,7 +63,8 @@ export const getImages = async () => {
 }
 
 export const imageAnalyze = async (file: File): Promise<RecommendList512 | null> => {
-    const reqUrl = `${BASEURL}/api/recommand/analyze`;
+    // 캐시 방지를 위한 타임스탬프 추가
+    const reqUrl = `${BASEURL}/api/recommand/analyze?t=${Date.now()}`;
     const formData = new FormData();
     formData.append('file', file);
 
@@ -71,45 +72,62 @@ export const imageAnalyze = async (file: File): Promise<RecommendList512 | null>
         const response = await fetch(reqUrl, {
             method: 'POST',
             body: formData,
+            cache: 'no-store' // Next.js 내부 캐시 강제 해제
         });
 
         if (!response.ok) {
             console.error("Server error:", response.status, response.statusText);
-            return null; // 실패 시 빈 배열 반환
+            return null;
         }
 
-        const data = await response.json();
-        // console.log("imageAnalyze data:", data.results?.[0]?.topk?.[0]?.label_name);
+        const data: RecommendList512 = await response.json();
 
-        return data as RecommendList512;
+        // [데이터 정규화] naverProductId -> productId 매핑 (ProductCard 호환용)
+        if (data.naverProducts) {
+            data.naverProducts = data.naverProducts.map((p: any) => ({
+                ...p,
+                productId: p.productId || p.naverProductId
+            }));
+        }
+
+        return data;
     } catch (error) {
         console.error("imageAnalyze error:", error);
-        return null; // 에러 시 빈 배열 반환하여 UI 깨짐 방지
+        return null;
     }
 }
 
 export const image768Analyze = async (file: File): Promise<RecommendResult768 | null> => {
-    const reqUrl = `${BASEURL}/api/recommand/768/analyze`;
+    // 캐시 방지를 위한 타임스탬프 추가
+    const reqUrl = `${BASEURL}/api/recommand/768/analyze?t=${Date.now()}`;
     const formData = new FormData();
     formData.append('file', file);
-    // console.log("image768Analyze data:", reqUrl);
+
     try {
         const response = await fetch(reqUrl, {
             method: 'POST',
             body: formData,
+            cache: 'no-store'
         });
 
         if (!response.ok) {
             console.error("Server error:", response.status, response.statusText);
-            return null; // 실패 시 null 반환
+            return null;
         }
 
-        const data = await response.json();
-        // console.log("image768Analyze data:", data);
+        const data: RecommendResult768 = await response.json();
 
-        return data as RecommendResult768;
+        // [데이터 정규화] naverProductId -> productId 매핑
+        if (data.naverProducts) {
+            data.naverProducts = data.naverProducts.map((p: any) => ({
+                ...p,
+                productId: p.productId || p.naverProductId
+            }));
+        }
+
+        return data;
     } catch (error) {
         console.error("image768Analyze error:", error);
-        return null; // 에러 시 null 반환하여 UI 로직에 맞춤
+        return null;
     }
 }
