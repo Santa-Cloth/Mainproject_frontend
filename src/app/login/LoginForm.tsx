@@ -147,16 +147,16 @@ export default function LoginForm() {
           </button>
 
           {/* 소셜 로그인 구분선 */}
-          <div className="relative flex items-center justify-center py-2 gap-4">
+          {/* <div className="relative flex items-center justify-center py-2 gap-4">
             <div className="flex-1 border-t-2 border-neutral-200 dark:border-white/10"></div>
             <span className="text-[12px] font-bold uppercase tracking-widest text-neutral-400 dark:text-neutral-500 shrink-0">
               Or Access With
             </span>
             <div className="flex-1 border-t-2 border-neutral-200 dark:border-white/10"></div>
-          </div>
+          </div> */}
 
           {/* 소셜 로그인 버튼 그룹 */}
-          <div className="flex justify-center gap-6 pt-2">
+          {/* <div className="flex justify-center gap-6 pt-2">
             <button type="button" onClick={() => handleSocialLogin('Google')} className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-neutral-100 bg-white text-neutral-800 shadow-sm transition-all hover:scale-110 hover:border-violet-200 dark:border-white/10 dark:bg-neutral-900 dark:hover:bg-neutral-800">
               <FcGoogle size={24} />
             </button>
@@ -166,7 +166,7 @@ export default function LoginForm() {
             <button type="button" onClick={() => handleSocialLogin('Kakao')} className="flex h-12 w-12 items-center justify-center rounded-full bg-[#FEE500] text-[#3c1e1e] transition-transform hover:scale-110">
               <SiKakaotalk size={20} />
             </button>
-          </div>
+          </div> */}
 
           {/* 회원가입 페이지 이동 링크 (경로 보정: /signup) */}
           <div className="flex flex-col items-center gap-3 pt-1">
