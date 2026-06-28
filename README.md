@@ -56,15 +56,19 @@
 ```bash
 src/
 ├── app/
-│   ├── api/             # API Service Layer (Native Fetch)
-│   ├── (main)/          # Shared-Layout Area
-│   │   ├── dashboard/   # Data Visualization Hub
-│   │   ├── uploadpage/  # Image Analysis Core
-│   │   ├── selectionpage/ # Product Curation
-│   └── components/      # UI Atoms & Molecules
-├── jotai/               # Global Atomic State
-├── types/               # Type Definitions
-└── assets/              # Static Assets
+│   ├── (main)/              # 메인 레이아웃 적용 영역 (Main Wrapper)
+│   │   ├── bookmark/        # 사용자 북마크 관리
+│   │   ├── components/      # 메인 레이아웃 및 공통 컴포넌트 (Header, Footer 등)
+│   │   ├── dashboard/       # 데이터 시각화 대시보드 (Sales, 3D Plotly)
+│   │   ├── memberinfo/      # 마이페이지 / 회원 정보 관리
+│   │   ├── selectionpage/   # 선택 카탈로그 기반 상품 추천 (Catalog Selection)
+│   │   └── uploadpage/      # 이미지 스타일 기반 상품 추천 (AI Analysis Studio)
+│   ├── api/                 # API 서비스 레이어 (Native Fetch API)
+│   ├── login/               # 로그인 페이지
+│   └── signup/              # 회원가입 페이지
+├── assets/                  # 이미지, 아이콘 등 정적 자원
+├── jotai/                   # 전역 상태 관리 (Atomic States & sessionStorage)
+└── types/                   # 공통 타입 정의 (TypeScript Types)
 ```
 
 ---
